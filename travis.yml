@@ -1,0 +1,25 @@
+sudo: required
+services:
+   - docker
+
+
+before_install:
+   - docker build -t nahid08/react-test -f  ./client/Dockerfile.dev ./client
+
+script:
+   - docker run nahid08/react-test npm test -- --coverage
+
+after_success:
+   - docker build -t nahid08/multi-client ./client
+   - docker build -t nahid08/multi-nginx ./nginx
+   - docker build -t nahid08/multi-server ./server
+   - docker build -t nahid08/multi-worker ./worker
+
+   # login in the docker cli
+   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    take those images and push them to docker hub
+   - docker push nahid08/muilt-client
+   - docker push nahid08/muilt-server
+   - docker push nahid08/muilt-nginx
+   - docker push nahid08/muilt-worker
