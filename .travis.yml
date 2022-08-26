@@ -23,7 +23,6 @@ after_success:
   - docker push nahid08/multi-server
   - docker push nahid08/multi-worker
 
-
 deploy:
   provider: elasticbeanstalk
   region: 'ap-south-1'
@@ -31,8 +30,7 @@ deploy:
   env: 'MultiDocker-env'
   bucket_name: 'elasticbeanstalk-ap-south-1-443118411418'
   bucket_path: 'docker-multi'
-   on:
-     branch: master
-   access_key_id: $AWS_ACCESS_KEY
-   secret_access_key: $AWS_SECRET_KEY
-
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
